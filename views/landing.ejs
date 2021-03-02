@@ -4,14 +4,21 @@
 <script>
     if ('geolocation' in navigator) {
         console.log('geolocation available');
-
-        navigator.geolocation.getCurrentPosition(async position => {
-            var lat = position.coords.latitude;
-            var lon = position.coords.longitude;
-            console.log(lat + "  YOOOOO  " + lon);
-            document.getElementById('latitude').textContent = lat;
-            document.getElementById('longitude').textContent = lon;
+        navigator.geolocation.getCurrentPosition(
+            function (position) {
+                var lat = position.coords.latitude;
+                var lon = position.coords.longitude;
+                console.log(lat + "  YOOOOO  " + lon);
+                document.getElementById('latitude').textContent = lat;
+                document.getElementById('longitude').textContent = lon;
+            },
+            function (error) {
+                alert(error.message);
+            }, {
+            enableHighAccuracy: true
+            , timeout: 5000
         });
+
     }
     else {
         document.getElementById('latitude').textContent = "FAIL";
