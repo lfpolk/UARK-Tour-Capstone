@@ -1,0 +1,17 @@
+<div id="latitude"></div>
+<div id="longitude"></div>
+<script>
+    if ('geolocation' in navigator) {
+        console.log('geolocation available');
+
+        navigator.geolocation.getCurrentPosition(async position => {
+            var lat = position.coords.latitude;
+            var lon = position.coords.longitude;
+            document.getElementById('latitude').textContent = lat;
+            document.getElementById('longitude').textContent = lon;
+        });
+    }
+    else {
+        console.log("geolocation not available")
+    }
+</script>

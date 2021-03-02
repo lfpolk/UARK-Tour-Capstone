@@ -1,0 +1,29 @@
+{
+  "name": "uark-tour-capstone",
+  "version": "1.0.0",
+  "description": "uark tour",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lfpolk/UARK-Tour-Capstone.git"
+  },
+  "author": "osmin and larson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lfpolk/UARK-Tour-Capstone/issues"
+  },
+  "homepage": "https://github.com/lfpolk/UARK-Tour-Capstone#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "connect-flash": "^0.1.1",
+    "dotenv": "^8.2.0",
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "express-sslify": "^1.2.0",
+    "method-override": "^3.0.0"
+  }
+}
