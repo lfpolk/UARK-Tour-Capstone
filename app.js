@@ -1,5 +1,5 @@
 var express = require("express");
-//var enforce = require('express-sslify');
+var enforce = require('express-sslify');
 var methodOverride = require("method-override");
 var app = express();
 var bodyParser = require("body-parser");
