@@ -1,26 +1,25 @@
+<head>
+    <title>Osmin Sanabria</title>
+    <style>
+        #map {
+            width: 400px;
+            height: 800px;
+        }
+    </style>
+
+</head>
+<form action="/" method="POST">
+    <div class="form-group">
+        <label for="location">Location</label>
+        <input class="form-control" type="text" name="location" id="location" placeholder="Yosemite National Park, CA">
+        <div>
+            <button class="btn btn-primary">Submit</button>
+        </div>
+    </div>
+</form>
 <div id="latitude"></div>
 <div id="longitude"></div>
+<div id="map"></div>
 <div>YTO</div>
-<script>
-    if ('geolocation' in navigator) {
-        console.log('geolocation available');
-        navigator.geolocation.getCurrentPosition(
-            function (position) {
-                var lat = position.coords.latitude;
-                var lon = position.coords.longitude;
-                console.log(lat + "  YOOOOO  " + lon);
-                document.getElementById('latitude').textContent = lat;
-                document.getElementById('longitude').textContent = lon;
-            },
-            function (error) {
-                alert(error.message);
-            }, {
-            enableHighAccuracy: true
-            , timeout: 5000
-        });
-
-    }
-    else {
-        document.getElementById('latitude').textContent = "FAIL";
-    }
-</script>
+<script src="logic.js" async defer></script>
+<script src="<%= mapSource %>" async defer></script>
