@@ -11,18 +11,18 @@ const Home = ({
       <Image source={require("../assets/uarkLogo.png")} style = {styles.uarkLogo}/>
       <Text style={styles.selectTour}>Select Tour</Text>
 
-      <TouchableOpacity onPress={() => navigation.navigate('Tour')} style={styles.buttonContainer}> 
+      <TouchableOpacity onPress={() => navigation.navigate('Tour', {name: 'Main Campus Tour'})} style={styles.buttonContainer}> 
         <Text style={styles.optionButtons}> Main Campus </Text>
       </TouchableOpacity >
 
-      <TouchableOpacity onPress={onPressResidence} style={styles.buttonContainer}> 
+      <TouchableOpacity onPress={() => navigation.navigate('Tour', {name: 'Residence Hall Tour'})} style={styles.buttonContainer}> 
         <Text style = {styles.optionButtons}> Residence </Text>
       </TouchableOpacity >
 
-      <TouchableOpacity onPress={onPressFraternity} style={styles.buttonContainer}> 
+      <TouchableOpacity onPress={() => navigation.navigate('Tour', {name: 'Fraternity Tour'})} style={styles.buttonContainer}> 
         <Text style = {styles.optionButtons}> Fraternity </Text>
       </TouchableOpacity >
-      <TouchableOpacity onPress={onPressSorority} style={styles.buttonContainer}> 
+      <TouchableOpacity onPress={() => navigation.navigate('Tour', {name: 'Sorority Tour'})} style={styles.buttonContainer}> 
         <Text style = {styles.optionButtons}> Sorority </Text>
       </TouchableOpacity >
 

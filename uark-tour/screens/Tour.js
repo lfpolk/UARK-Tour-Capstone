@@ -5,7 +5,7 @@ const Tour = ({
     params,
 }) => (
     <View>
-        <Text>Tour Page</Text>
+        <Text>Tour Page!</Text>
     </View>
 );
 
