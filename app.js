@@ -56,8 +56,6 @@ var mapSource = "https://maps.googleapis.com/maps/api/js?key=" + process.env.GOO
 
 //MAIN ROUTES
 
-
-
 app.get("/", function(req, res)
 {
     if(res.err)
