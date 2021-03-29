@@ -1,28 +1,44 @@
+var marker;
 
-window.onload =  function() {
-        var options ={
-            zoom:23
+window.onload =  function() { 
+    var options ={
+        zoom:15
+    }
+    
+    const map = new google.maps.Map(document.getElementById("map"), options);
+    marker = new google.maps.Marker({
+        map,
+        title: "Hello World!",
+        icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            scale: 10,
+            fillOpacity: 1,
+            strokeWeight: 2,
+            fillColor: '#5384ED',
+            strokeColor: '#ffffff'
         }
-        
-        const map = new google.maps.Map(document.getElementById("map"), options);
-        const marker = new google.maps.Marker({
-            map,
-            title: "Hello World!",
-            icon: {
-                path: google.maps.SymbolPath.CIRCLE,
-                scale: 10,
-                fillOpacity: 1,
-                strokeWeight: 2,
-                fillColor: '#5384ED',
-                strokeColor: '#ffffff'
-            }
-        }); 
+    });
+    var directionsService = new google.maps.DirectionsService;
+    var directionsDisplay = new google.maps.DirectionsRenderer;
+    directionsDisplay.setMap(map);
     if(navigator.geolocation) {
         navigator.geolocation.watchPosition(function(position) {
-            
-                user_location = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                var LatLng = { lat: position.coords.latitude, lng: position.coords.longitude }
+                var user_location = new google.maps.LatLng(LatLng);
                 map.setCenter(user_location);
                 marker.setPosition(user_location);
+                
+                directionsService.route({
+                    origin: LatLng,
+                    destination: "Arkansas Union, 435 Garland Ave, Fayetteville, AR 72701, USA",
+                    travelMode: 'WALKING'
+                }, function(response, status) {
+                    if (status === 'OK') {
+                    directionsDisplay.setDirections(response);
+                    } else {
+                    window.alert('Directions request failed due to ' + status);
+                    }
+                });
             },
             function (error) {
             alert(error.message);
@@ -38,12 +54,10 @@ window.onload =  function() {
 
 
 function initMap() {
+    var directionsService = new google.maps.DirectionsService;
+    var directionsDisplay = new google.maps.DirectionsRenderer;
+    directionsDisplay.setMap(map);
     
-    new google.maps.Marker({
-        position: myLatLng,
-        map,
-        title: "Hello World!",
-    });
 }
 
     

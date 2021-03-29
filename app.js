@@ -52,7 +52,7 @@ var LocationSchema = new mongoose.Schema({
 
 var Location = mongoose.model("Location", LocationSchema);
 var placesSource = "https://maps.googleapis.com/maps/api/js?key=" + process.env.GOOGLE_API + "&callback=createMap&libraries=places";
-var mapSource = "https://maps.googleapis.com/maps/api/js?key=" + process.env.GOOGLE_API + "&callback=initMap"
+var mapSource = "https://maps.googleapis.com/maps/api/js?key=" + process.env.GOOGLE_API;
 
 //MAIN ROUTES
 
