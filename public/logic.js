@@ -1,12 +1,13 @@
 
 window.onload =  function() {
+        var options ={
+            zoom:23
+        }
+        
+        const map = new google.maps.Map(document.getElementById("map"), options);
     if(navigator.geolocation) {
         navigator.geolocation.watchPosition(function(position) {
-            var options ={
-                zoom:23
-            }
-        
-                const map = new google.maps.Map(document.getElementById("map"), options);
+            
                 user_location = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
                 map.setCenter(user_location);
                 new google.maps.Marker({
