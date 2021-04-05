@@ -2,32 +2,48 @@ import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { createStackNavigator, createAppContainer } from '@react-navigation/stack';  
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import Home from './screens/Home';
 import Tour from './screens/Tour';
+import { Appearance, useColorScheme, AppearanceProvider } from 'react-native-appearance';
+import { color } from 'react-native-reanimated';
+
+
+
+
+//DarkTheme.colors.background = '#fff';
+//theme={colorScheme == 'dark' ? DarkTheme : DefaultTheme}
 
 const Main = createStackNavigator();
 const Drawer = createDrawerNavigator();
+DefaultTheme.colors.background = '#fff';
 
-const App = () => (
-  <NavigationContainer>
-    <Main.Navigator>
+//DarkTheme.colors.border = '#fff';
 
-      <Main.Screen 
-        name="Home" 
-        component={Home}
-      />
+const App = () => {
 
-      <Main.Screen 
-        name="Tour" 
-        component={Tour}
-        options={({ route }) => ({ title: route.params.name })}
-      />
+  const colorScheme = useColorScheme();
+  return(
+    <AppearanceProvider>
+      <NavigationContainer theme={colorScheme == 'dark' ? DarkTheme : DefaultTheme}>
+        <Main.Navigator>
 
-    </Main.Navigator>
+          <Main.Screen 
+            name="Home" 
+            component={Home}
+          />
+
+          <Main.Screen 
+            name="Tour" 
+            component={Tour}
+            options={({ route }) => ({ title: route.params.name, headerBackTitle: 'Exit Tour' })}
+          />
+
+        </Main.Navigator>
 
 
-  </NavigationContainer>
-);
+      </NavigationContainer>
+      </AppearanceProvider>
+)};
 
 export default App;

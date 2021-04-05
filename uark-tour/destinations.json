@@ -1,0 +1,19 @@
+{
+    "markers": [
+      {
+        "name": "Union",
+        "position": [36.068689, -94.175169],
+        "order": 0
+      },
+      {
+        "name": "J.B. Hunt",
+        "location": [36.04001, -94.10259],
+        "order": 1
+      },
+      {
+        "name": "Old Main",
+        "location": [36.068691284851326, -94.17145521725391],
+        "order": 2
+      }
+    ]
+  }

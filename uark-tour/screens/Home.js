@@ -1,14 +1,16 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
+import { useTheme } from '@react-navigation/native';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
  
-
+//console.log(colorScheme);
 //export default function App() {
 const Home = ({
     navigation,
 }) => (
     <View style={styles.container}>
       <Image source={require("../assets/uarkLogo.png")} style = {styles.uarkLogo}/>
+
       <Text style={styles.selectTour}>Select Tour</Text>
 
       <TouchableOpacity onPress={() => navigation.navigate('Tour', {name: 'Main Campus Tour'})} style={styles.buttonContainer}> 
@@ -29,21 +31,29 @@ const Home = ({
     </View>
 )
 
+/*
 const onPressMain = () => console.log("Main Campus")
 const onPressResidence = () => console.log("Residence")
 const onPressFraternity = () => console.log("Fraternity")
 const onPressSorority = () => console.log("Sorority")
+*/
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center'
   },
 
+  logoText: {
+
+  },
+
   uarkLogo: {
     marginBottom: 40,
+    width: 200,
+    height: 200,
+    resizeMode: 'contain'
   },
 
   selectTour: {
