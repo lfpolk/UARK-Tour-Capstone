@@ -49,6 +49,7 @@ const Tour = ({
     <View style={styles.container}>
         <Text>Tour Page!</Text>
         <MapView 
+        provider={MapView.PROVIDER_GOOGLE} 
         style={styles.mapStyle} 
         //followsUserLocation={true}
         showsUserLocation={true}
@@ -106,11 +107,10 @@ const styles = StyleSheet.create({
       height: Dimensions.get('window').height,
     },
     nextButton: {
-        color: '#BE2A2A',
         fontSize: 18,
         //alignItems: 'center',
         //justifyContent: 'center',
-        backgroundColor: '#FFFFFF',
+        backgroundColor: '#BE2A2A',
         borderRadius: 22,
         borderWidth: 2,
         overflow: 'hidden',
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
         paddingTop: 8,
         textAlign: 'center',
         height: 62,
-        borderColor: '#BE2A2A',
+        borderColor: '#fff',
         width: 60,
         
 

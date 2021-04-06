@@ -21,7 +21,8 @@ const Destination = ({
     return (
     <View style={styles.container}>
         <Text>Tour Page!</Text>
-        <MapView 
+        <MapView
+        provider={MapView.PROVIDER_GOOGLE} 
         initialRegion={region}
         style={styles.mapStyle} 
         >
