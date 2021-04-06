@@ -7,6 +7,7 @@ import * as Permissions from 'expo-permissions';
 import * as Location from 'expo-location';
 import { LocationGeofencingEventType } from 'expo-location';
 import { MaterialIcons } from '@expo/vector-icons';
+import MapViewDirections from 'react-native-maps-directions';
 
 
 const Tour = ({
@@ -60,36 +61,23 @@ const Tour = ({
         //rotateEnabled={true}
         >
 
-        <Polyline
-		coordinates={[
-			{ latitude: latitude, longitude: longitude },
-			{ latitude: locations.markers[0].location[0], longitude: locations.markers[0].location[1] }
-		]}
-		strokeColor="#000"
-		strokeColors={[
-			'#B24112',
-			'#B24112', 
-			'#B24112',
-			'#E5845C',
-			'#238C23',
-			'#7F0000'
-		]}
-		strokeWidth={6}
-	/>
-
-    <Marker
-        coordinate={{ 
-            latitude : locations.markers[0].location[0], 
-            longitude: locations.markers[0].location[1],
-         }}> 
-
-    </Marker>
-
+        
     <TouchableOpacity onPress={() => navigation.navigate('Destination', {destination: locations.markers[0].name})} style={styles.buttonContainer}> 
         <MaterialIcons name="delete" size={12} color="red" />
         <Text style={styles.nextButton}>{`Next \nStop`}</Text>
       </TouchableOpacity >
-
+      <MapViewDirections
+    origin={{ 
+        latitude : latitude, 
+        longitude: longitude,
+     }}
+    destination={{ 
+        latitude : locations.markers[0].location[0], 
+        longitude: locations.markers[0].location[1],
+     }}
+     //Need to set up api key
+     apikey=''
+  />
         </MapView>
     </View>
     );
@@ -134,3 +122,29 @@ const styles = StyleSheet.create({
 );
 
 export default Tour;
+
+/*<Polyline
+		coordinates={[
+			{ latitude: latitude, longitude: longitude },
+			{ latitude: locations.markers[0].location[0], longitude: locations.markers[0].location[1] }
+		]}
+		strokeColor="#000"
+		strokeColors={[
+			'#B24112',
+			'#B24112', 
+			'#B24112',
+			'#E5845C',
+			'#238C23',
+			'#7F0000'
+		]}
+		strokeWidth={6}
+	/>
+
+    <Marker
+        coordinate={{ 
+            latitude : locations.markers[0].location[0], 
+            longitude: locations.markers[0].location[1],
+         }}> 
+
+    </Marker>
+*/
