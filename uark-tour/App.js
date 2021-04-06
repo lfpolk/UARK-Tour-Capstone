@@ -5,6 +5,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import Home from './screens/Home';
 import Tour from './screens/Tour';
+import Destination from './screens/Destination';
 import { Appearance, useColorScheme, AppearanceProvider } from 'react-native-appearance';
 import { color } from 'react-native-reanimated';
 
@@ -37,6 +38,12 @@ const App = () => {
             name="Tour" 
             component={Tour}
             options={({ route }) => ({ title: route.params.name, headerBackTitle: 'Exit Tour' })}
+          />
+
+          <Main.Screen 
+            name="Destination" 
+            component={Destination}
+            options={({ route }) => ({ title: route.params.destination, headerLeft: ()=> null})}
           />
 
         </Main.Navigator>
