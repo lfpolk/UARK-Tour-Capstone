@@ -9,17 +9,16 @@ import { LocationGeofencingEventType } from 'expo-location';
 import { MaterialIcons } from '@expo/vector-icons';
 import MapViewDirections from 'react-native-maps-directions';
 
-
+const process = require('process');
 const Tour = ({
     navigation,
 }) => {
 
-    const [latitude, setLatitude] = useState();
-    const [longitude, setLongitude] = useState();
+    const [coordinates, setCoordinates] = useState({latitude: 36.068689, longitude: -94.175169});
 
     useEffect(() => {
         _getLocation();
-      });
+      }, []);
 
     _getLocation = async () => {
   
@@ -32,14 +31,13 @@ const Tour = ({
 
         const userLocation = await Location.getCurrentPositionAsync();
 
-        setLatitude(userLocation.coords.latitude);
-        setLongitude(userLocation.coords.longitude);
-        console.log('updated');
+        setCoordinates(userLocation.coords);
+        console.log("updated location");
     }
 
     const [region, setRegion] = useState({
-        latitude: latitude,
-        longitude: longitude,
+        latitude: 36.068689,
+        longitude: -94.175169,
         latitudeDelta: 0.00322,
         longitudeDelta: 0.00121
       });
@@ -50,11 +48,12 @@ const Tour = ({
     <View style={styles.container}>
         <Text>Tour Page!</Text>
         <MapView 
+        initialRegion={region}
         provider={MapView.PROVIDER_GOOGLE} 
         style={styles.mapStyle} 
-        //followsUserLocation={true}
+        followsUserLocation={true}
         showsUserLocation={true}
-        //showsMyLocationButton={true}
+        showsMyLocationButton={true}
         //showsCompass={true}
         //toolbarEnabled={true}
         //zoomEnabled={true}
@@ -66,18 +65,22 @@ const Tour = ({
         <MaterialIcons name="delete" size={12} color="red" />
         <Text style={styles.nextButton}>{`Next \nStop`}</Text>
       </TouchableOpacity >
-      <MapViewDirections
-    origin={{ 
-        latitude : latitude, 
-        longitude: longitude,
-     }}
-    destination={{ 
-        latitude : locations.markers[0].location[0], 
-        longitude: locations.markers[0].location[1],
-     }}
-     //Need to set up api key
-     apikey=''
-  />
+                  <MapViewDirections
+                  
+                    origin={coordinates}
+                    destination={{ 
+                        latitude : locations.markers[1].location[0], 
+                        longitude: locations.markers[1].location[1],
+                    }}
+                    mode="WALKING"
+                    onStart={(params) => {
+                    console.log(`Started routing between "${params.origin}" and "${params.destination}"`);
+                    }}
+                    strokeWidth={5}
+                    strokeColor="red"
+                    apikey='AIzaSyCdyYaBJkKJAxJr8xaxTqFHtBntn8iCrP8'
+                  />
+    
         </MapView>
     </View>
     );
