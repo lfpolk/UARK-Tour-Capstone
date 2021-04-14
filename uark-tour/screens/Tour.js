@@ -19,7 +19,6 @@ const Tour = ({
 
     _getLocation = async () => {
   
-
         const { status } = await Permissions.askAsync(Permissions.LOCATION);
 
         if(status != 'granted'){
@@ -40,8 +39,6 @@ const Tour = ({
         longitudeDelta: 0.00121
       });
 
-      
-
     return (
     <View style={styles.container}>
         <MapView 
@@ -52,7 +49,6 @@ const Tour = ({
         showsUserLocation={true}
         showsMyLocationButton={true}
         >
-
         
     <TouchableOpacity onPress={() => navigation.navigate('Destination', {destination: locations.markers[0].name})} style={styles.buttonContainer}> 
         <MaterialIcons name="delete" size={12} color="red" />
@@ -107,7 +103,6 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         position: 'absolute'
       }}
-    
 );
 
 export default Tour;
