@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import MapView, {Polyline, Marker, Image} from 'react-native-maps';
 import { StyleSheet, Text, View, Dimensions, TouchableOpacity } from 'react-native'; 
 import locations from '../destinations.json';
-//import Geolocation from '@react-native-community/geolocation';
 import * as Permissions from 'expo-permissions';
 import { MaterialIcons } from '@expo/vector-icons';
 import * as Location from 'expo-location';
@@ -52,10 +51,6 @@ const Tour = ({
         followsUserLocation={true}
         showsUserLocation={true}
         showsMyLocationButton={true}
-        //showsCompass={true}
-        //toolbarEnabled={true}
-        //zoomEnabled={true}
-        //rotateEnabled={true}
         >
 
         
@@ -97,23 +92,16 @@ const styles = StyleSheet.create({
     },
     nextButton: {
         fontSize: 18,
-        //alignItems: 'center',
-        //justifyContent: 'center',
         backgroundColor: '#BE2A2A',
         borderRadius: 22,
         borderWidth: 2,
         overflow: 'hidden',
         marginTop: 40,
-
         paddingTop: 8,
         textAlign: 'center',
         height: 62,
         borderColor: '#fff',
         width: 60,
-        
-
-        //textAlignVertical: 'center'
-        //borderColor: '#000'
       },
       buttonContainer: {
         justifyContent: 'flex-end',
@@ -123,29 +111,3 @@ const styles = StyleSheet.create({
 );
 
 export default Tour;
-
-/*<Polyline
-		coordinates={[
-			{ latitude: latitude, longitude: longitude },
-			{ latitude: locations.markers[0].location[0], longitude: locations.markers[0].location[1] }
-		]}
-		strokeColor="#000"
-		strokeColors={[
-			'#B24112',
-			'#B24112', 
-			'#B24112',
-			'#E5845C',
-			'#238C23',
-			'#7F0000'
-		]}
-		strokeWidth={6}
-	/>
-
-    <Marker
-        coordinate={{ 
-            latitude : locations.markers[0].location[0], 
-            longitude: locations.markers[0].location[1],
-         }}> 
-
-    </Marker>
-*/
