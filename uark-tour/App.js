@@ -16,7 +16,6 @@ import { color } from 'react-native-reanimated';
 //theme={colorScheme == 'dark' ? DarkTheme : DefaultTheme}
 
 const Main = createStackNavigator();
-const Drawer = createDrawerNavigator();
 DefaultTheme.colors.background = '#fff';
 
 //DarkTheme.colors.border = '#fff';

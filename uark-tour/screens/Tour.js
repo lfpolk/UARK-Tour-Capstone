@@ -4,14 +4,12 @@ import { StyleSheet, Text, View, Dimensions, TouchableOpacity } from 'react-nati
 import locations from '../destinations.json';
 //import Geolocation from '@react-native-community/geolocation';
 import * as Permissions from 'expo-permissions';
-import * as Location from 'expo-location';
-import { LocationGeofencingEventType } from 'expo-location';
 import { MaterialIcons } from '@expo/vector-icons';
+import * as Location from 'expo-location';
 import MapViewDirections from 'react-native-maps-directions';
 
-const process = require('process');
 const Tour = ({
-    navigation,
+    navigation, route
 }) => {
 
     const [coordinates, setCoordinates] = useState({latitude: 36.068689, longitude: -94.175169});
@@ -33,6 +31,7 @@ const Tour = ({
 
         setCoordinates(userLocation.coords);
         console.log("updated location");
+        console.log(route.params.testProp);
     }
 
     const [region, setRegion] = useState({
@@ -46,7 +45,6 @@ const Tour = ({
 
     return (
     <View style={styles.container}>
-        <Text>Tour Page!</Text>
         <MapView 
         initialRegion={region}
         provider={MapView.PROVIDER_GOOGLE} 
@@ -95,7 +93,7 @@ const styles = StyleSheet.create({
     },
     mapStyle: {
       width: Dimensions.get('window').width,
-      height: Dimensions.get('window').height,
+      height: Dimensions.get('window').height - 30,
     },
     nextButton: {
         fontSize: 18,
