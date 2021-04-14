@@ -7,7 +7,6 @@ import Home from './screens/Home';
 import Tour from './screens/Tour';
 import Destination from './screens/Destination';
 import { Appearance, useColorScheme, AppearanceProvider } from 'react-native-appearance';
-import { color } from 'react-native-reanimated';
 
 
 
@@ -17,6 +16,8 @@ import { color } from 'react-native-reanimated';
 
 const Main = createStackNavigator();
 DefaultTheme.colors.background = '#fff';
+DarkTheme.colors.background = '#000';
+
 
 //DarkTheme.colors.border = '#fff';
 
@@ -40,7 +41,7 @@ const App = () => {
           />
 
           <Main.Screen 
-            name="Destination" 
+            name="Destination"
             component={Destination}
             options={({ route }) => ({ title: route.params.destination, headerLeft: ()=> null})}
           />
