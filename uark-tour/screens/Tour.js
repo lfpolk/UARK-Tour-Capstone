@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import MapView, {Polyline, Marker, Image} from 'react-native-maps';
 import { StyleSheet, Text, View, Dimensions, TouchableOpacity } from 'react-native'; 
 import locations from '../destinations.json';
-//import Geolocation from '@react-native-community/geolocation';
 import * as Permissions from 'expo-permissions';
 import { MaterialIcons } from '@expo/vector-icons';
 import * as Location from 'expo-location';
@@ -20,7 +19,6 @@ const Tour = ({
 
     _getLocation = async () => {
   
-
         const { status } = await Permissions.askAsync(Permissions.LOCATION);
 
         if(status != 'granted'){
@@ -62,16 +60,6 @@ const Tour = ({
       console.log("Location reached ", LocationReached);
     }
 
-    const getDestination = () => {
-        return {
-          latitude: 36.321410732129166, 
-          longitude: -94.15284966387985
-          //latitude : locations.markers[1].location[0], 
-          //longitude: locations.markers[1].location[1]
-        }
-    }
-    
-
     return (
     <View style={styles.container}>
         <MapView 
@@ -87,7 +75,6 @@ const Tour = ({
         //zoomEnabled={true}
         //rotateEnabled={true}
         >
-
         
     <TouchableOpacity onPress={() => navigation.navigate('Destination', {destination: locations.markers[0].name})} style={styles.buttonContainer}> 
         <MaterialIcons name="delete" size={12} color="red" />
@@ -131,55 +118,21 @@ const styles = StyleSheet.create({
     },
     nextButton: {
         fontSize: 18,
-        //alignItems: 'center',
-        //justifyContent: 'center',
         backgroundColor: '#BE2A2A',
         borderRadius: 22,
         borderWidth: 2,
         overflow: 'hidden',
         marginTop: 40,
-
         paddingTop: 8,
         textAlign: 'center',
         height: 62,
         borderColor: '#fff',
         width: 60,
-        
-
-        //textAlignVertical: 'center'
-        //borderColor: '#000'
       },
       buttonContainer: {
         justifyContent: 'flex-end',
         position: 'absolute'
       }}
-    
 );
 
 export default Tour;
-
-/*<Polyline
-		coordinates={[
-			{ latitude: latitude, longitude: longitude },
-			{ latitude: locations.markers[0].location[0], longitude: locations.markers[0].location[1] }
-		]}
-		strokeColor="#000"
-		strokeColors={[
-			'#B24112',
-			'#B24112', 
-			'#B24112',
-			'#E5845C',
-			'#238C23',
-			'#7F0000'
-		]}
-		strokeWidth={6}
-	/>
-
-    <Marker
-        coordinate={{ 
-            latitude : locations.markers[0].location[0], 
-            longitude: locations.markers[0].location[1],
-         }}> 
-
-    </Marker>
-*/
