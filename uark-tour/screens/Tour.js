@@ -40,8 +40,37 @@ const Tour = ({
         latitudeDelta: 0.00322,
         longitudeDelta: 0.00121
       });
+    
+    const onUserLocationChange = async (event) => {
+      const { latitude, longitude, heading } = event.nativeEvent.coordinate
+      try {
+        const input = {
+          latitude,
+          longitude,
+          heading,
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
+    const onDirectionFound = (event) => {
+      console.log("Distance: ", event.distance);
+      var LocationReached = false
+      if (event.distance < 0.04) {
+        LocationReached = true;
+      }
+      console.log("Location reached ", LocationReached);
+    }
 
-      
+    const getDestination = () => {
+        return {
+          latitude: 36.321410732129166, 
+          longitude: -94.15284966387985
+          //latitude : locations.markers[1].location[0], 
+          //longitude: locations.markers[1].location[1]
+        }
+    }
+    
 
     return (
     <View style={styles.container}>
@@ -52,6 +81,7 @@ const Tour = ({
         followsUserLocation={true}
         showsUserLocation={true}
         showsMyLocationButton={true}
+        onUserLocationChange={onUserLocationChange}
         //showsCompass={true}
         //toolbarEnabled={true}
         //zoomEnabled={true}
@@ -66,10 +96,14 @@ const Tour = ({
                   <MapViewDirections
                   
                     origin={coordinates}
-                    destination={{ 
-                        latitude : locations.markers[1].location[0], 
-                        longitude: locations.markers[1].location[1],
-                    }}
+                    //destination={{ 
+                        //latitude: 36.620910945465315, 
+                        //longitude: -94.65278047498794
+                        //latitude : locations.markers[1].location[0], 
+                        //longitude: locations.markers[1].location[1],
+                   // }}
+                    onReady={onDirectionFound}
+                    destination={getDestination()}
                     mode="WALKING"
                     onStart={(params) => {
                     console.log(`Started routing between "${params.origin}" and "${params.destination}"`);
