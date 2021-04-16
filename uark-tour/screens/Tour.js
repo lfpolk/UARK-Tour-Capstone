@@ -60,6 +60,19 @@ const Tour = ({
       console.log("Location reached ", LocationReached);
     }
 
+    const getDestination = () => {
+        return {
+          //my house (Osmin)
+          //latitude: 36.321410732129166, 
+          //longitude: -94.15284966387985
+
+          //union
+          latitude : locations.markers[1].location[0], 
+          longitude: locations.markers[1].location[1]
+        }
+    }
+    
+
     return (
     <View style={styles.container}>
         <MapView 
