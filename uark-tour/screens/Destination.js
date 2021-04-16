@@ -179,7 +179,8 @@ const styles = StyleSheet.create({
     buildingLink: {
       textAlign: 'left',
       alignSelf: 'flex-start',
-      marginLeft: 15
+      marginLeft: 15,
+      color: '#BE2A2A'
     }
   });
 
