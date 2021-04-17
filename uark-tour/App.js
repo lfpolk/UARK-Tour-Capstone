@@ -37,7 +37,7 @@ const App = () => {
           <Main.Screen 
             name="Tour" 
             component={Tour}
-            options={({ route }) => ({ title: route.params.name, headerBackTitle: 'Exit Tour' })}
+            options={({ route }) => ({ title: route.params.name, headerLeft: ()=> null })}
           />
 
           <Main.Screen 

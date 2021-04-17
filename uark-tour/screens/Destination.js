@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
       textAlign: 'left',
       alignSelf: 'flex-start',
       marginLeft: 15,
-      color: '#BE2A2A'
+      color: '#BE2A2A',
     }
   });
 

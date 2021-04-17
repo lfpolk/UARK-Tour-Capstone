@@ -3,13 +3,18 @@ import MapView, {Polyline, Marker, Image} from 'react-native-maps';
 import { StyleSheet, Text, View, Dimensions, TouchableOpacity } from 'react-native'; 
 import locations from '../destinations.json';
 import * as Permissions from 'expo-permissions';
-import { MaterialIcons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons'; 
 import * as Location from 'expo-location';
 import MapViewDirections from 'react-native-maps-directions';
+import { useTheme } from '@react-navigation/native';
 
 const Tour = ({
     navigation, route
 }) => {
+
+  // Objects will be in route.params.object
+
+  const { colors } = useTheme();
 
     const [coordinates, setCoordinates] = useState({latitude: 36.068689, longitude: -94.175169});
 
@@ -29,7 +34,6 @@ const Tour = ({
 
         setCoordinates(userLocation.coords);
         console.log("updated location");
-        console.log(route.params.testProp);
     }
 
     const [region, setRegion] = useState({
@@ -75,6 +79,15 @@ const Tour = ({
 
     return (
     <View style={styles.container}>
+      <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.buttonContainer}> 
+        <Ionicons name="exit-outline" size={20} color="red" style={styles.exitButton}/>
+        <Text style={styles.exitButton}>{`Exit`}</Text>
+      </TouchableOpacity >
+
+      <TouchableOpacity onPress={() => navigation.navigate('Destination', {destination: locations.markers[0].name})} style={[styles.buttonContainer, {alignSelf: 'flex-end'}]}> 
+        <Text style={styles.exitButton}>{`Temp Dest`}</Text>
+      </TouchableOpacity >
+
         <MapView 
         initialRegion={region}
         provider={MapView.PROVIDER_GOOGLE} 
@@ -89,10 +102,6 @@ const Tour = ({
         //rotateEnabled={true}
         >
         
-    <TouchableOpacity onPress={() => navigation.navigate('Destination', {destination: locations.markers[0].name})} style={styles.buttonContainer}> 
-        <MaterialIcons name="delete" size={12} color="red" />
-        <Text style={styles.nextButton}>{`Next \nStop`}</Text>
-      </TouchableOpacity >
                   <MapViewDirections
                   
                     origin={coordinates}
@@ -120,31 +129,33 @@ const Tour = ({
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
+      display: 'flex',
       backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
+      flexDirection: 'row',
+      //justifyContent: 'center',
     },
     mapStyle: {
+      position: 'absolute',
       width: Dimensions.get('window').width,
       height: Dimensions.get('window').height - 30,
+      zIndex: -10
     },
-    nextButton: {
-        fontSize: 18,
-        backgroundColor: '#BE2A2A',
-        borderRadius: 22,
-        borderWidth: 2,
-        overflow: 'hidden',
-        marginTop: 40,
-        paddingTop: 8,
-        textAlign: 'center',
-        height: 62,
-        borderColor: '#fff',
-        width: 60,
-      },
+    exitButton: {
+      color: '#BE2A2A',
+      fontSize: 20,
+      margin: -5,
+      padding: 5,
+      textAlign: 'center',
+    },
       buttonContainer: {
-        justifyContent: 'flex-end',
-        position: 'absolute'
+        overflow: 'hidden',
+        marginTop: 10,
+        marginLeft: 10,
+        borderRadius: 10,
+        borderWidth: 2,
+        borderColor: '#BE2A2A',
+        backgroundColor: 'black',
+        padding: 10
       }}
 );
 
