@@ -7,6 +7,8 @@ import { Ionicons } from '@expo/vector-icons';
 import * as Location from 'expo-location';
 import MapViewDirections from 'react-native-maps-directions';
 import { useTheme } from '@react-navigation/native';
+import Destination from './Destination';
+import axios from 'axios';
 
 const Tour = ({
     navigation, route
@@ -15,26 +17,26 @@ const Tour = ({
   // Objects will be in route.params.object
 
   const { colors } = useTheme();
+  const [destination, setDestination] = useState(
+    {
 
-    const [coordinates, setCoordinates] = useState({latitude: 36.068689, longitude: -94.175169});
+    })
 
-    useEffect(() => {
-        _getLocation();
-      }, []);
+    
+    
 
-    _getLocation = async () => {
-  
-        const { status } = await Permissions.askAsync(Permissions.LOCATION);
-
-        if(status != 'granted'){
-            console.log('PERMISSION NOT GRANTED');
-        }
-
-        const userLocation = await Location.getCurrentPositionAsync();
-
-        setCoordinates(userLocation.coords);
-        console.log("updated location");
+  const [newDestination, setNewDestination] = useState(
+    {
+      _id: '1',
+      inputCoord: [36.06666610956379, -94.17378783417878],
+      inputBuilding:'J.B. HUNT',
+      inputImg: 'https://www.cdicon.com/assets/uploads/modules/90443-for-web-82055.jpg', 
+      inputDescription: 'Departments in this building include Computer Science and Engineering, Walton College of Business, Center For Advanced Spatial Technologies, and High Performance Computing Center.',
+      inputLink: 'https://directory.uark.edu/buildings/73/jbht/j-b-hunt-transport-services-inc-center-for-academic-excellence'
     }
+  )
+
+    const [myPosition, setMyPosition] = useState(null);
 
     const [region, setRegion] = useState({
         latitude: 36.068689,
@@ -44,6 +46,7 @@ const Tour = ({
       });
     
     const onUserLocationChange = async (event) => {
+      setMyPosition(event.nativeEvent.coordinate);
       const { latitude, longitude, heading } = event.nativeEvent.coordinate
       try {
         const input = {
@@ -56,12 +59,15 @@ const Tour = ({
       }
     }
     const onDirectionFound = (event) => {
-      console.log("Distance: ", event.distance);
-      var LocationReached = false
-      if (event.distance < 0.04) {
-        LocationReached = true;
+
+      if (destination){
+        setDestination(
+          {...destination,
+            distance: event.distance,
+            reached: event.distance < 0.02
+          }
+        )
       }
-      console.log("Location reached ", LocationReached);
     }
 
     const getDestination = () => {
@@ -79,19 +85,10 @@ const Tour = ({
 
     return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.buttonContainer}> 
-        <Ionicons name="exit-outline" size={20} color="red" style={styles.exitButton}/>
-        <Text style={styles.exitButton}>{`Exit`}</Text>
-      </TouchableOpacity >
-
-      <TouchableOpacity onPress={() => navigation.navigate('Destination', {destination: locations.markers[0].name})} style={[styles.buttonContainer, {alignSelf: 'flex-end'}]}> 
-        <Text style={styles.exitButton}>{`Temp Dest`}</Text>
-      </TouchableOpacity >
-
         <MapView 
         initialRegion={region}
         provider={MapView.PROVIDER_GOOGLE} 
-        style={styles.mapStyle} 
+        style={{width: '100%', height: Dimensions.get('window').height - 150}}
         followsUserLocation={true}
         showsUserLocation={true}
         showsMyLocationButton={true}
@@ -101,10 +98,10 @@ const Tour = ({
         //zoomEnabled={true}
         //rotateEnabled={true}
         >
-        
+          {destination && (
                   <MapViewDirections
                   
-                    origin={coordinates}
+                    origin={myPosition}
                     //destination={{ 
                         //latitude: 36.620910945465315, 
                         //longitude: -94.65278047498794
@@ -114,21 +111,61 @@ const Tour = ({
                     onReady={onDirectionFound}
                     destination={getDestination()}
                     mode="WALKING"
-                    onStart={(params) => {
-                    console.log(`Started routing between "${params.origin}" and "${params.destination}"`);
-                    }}
                     strokeWidth={5}
                     strokeColor="red"
-                    apikey='AIzaSyCdyYaBJkKJAxJr8xaxTqFHtBntn8iCrP8'
+                    apikey='AIzaSyAy_CEDrADJm9t4zdf2Dl8othOfzxMsKAc'
                   />
+                  )}
     
         </MapView>
+        <View style={styles.bottomContainer}>
+          <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.buttonContainer}> 
+          {/* <Ionicons name="exit-outline" size={20} color="red" style={styles.exitButton}/> */}
+          <Text style={styles.exitButton}>{`Exit Tour`}</Text>
+        </TouchableOpacity >
+
+        <TouchableOpacity style={styles.buttonContainer}> 
+          <Text style={styles.exitButton}>{destination.distance}</Text>
+        </TouchableOpacity >
+
+        </View>
+        
+         {destination.reached &&
+        <Destination 
+          newDestination ={newDestination}
+          distance ={destination.distance}
+        />}
     </View>
     );
     };
 
 const styles = StyleSheet.create({
-    container: {
+    bottomContainer: {
+    height: 100,
+    backgroundColor: 'white',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 15,
+    },
+    exitButton: {
+      color: '#BE2A2A',
+      fontSize: 20,
+      margin: -5,
+      padding: 5,
+      textAlign: 'center',
+    },
+    buttonContainer: {
+        overflow: 'hidden',
+        marginTop: 10,
+        marginLeft: 10,
+        borderRadius: 10,
+        borderWidth: 2,
+        borderColor: '#BE2A2A',
+        backgroundColor: 'black',
+        padding: 10
+      }
+    /* container: {
       display: 'flex',
       backgroundColor: '#fff',
       flexDirection: 'row',
@@ -156,7 +193,7 @@ const styles = StyleSheet.create({
         borderColor: '#BE2A2A',
         backgroundColor: 'black',
         padding: 10
-      }}
+      } */}
 );
 
 export default Tour;
