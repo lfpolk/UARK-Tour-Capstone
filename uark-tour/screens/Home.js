@@ -12,18 +12,47 @@ const Home = ({
 
       <Text style={styles.selectTour}>Select Tour</Text>
 
-      <TouchableOpacity onPress={() => navigation.navigate('Tour', {name: 'Main Campus Tour'})} style={styles.buttonContainer}> 
+      <TouchableOpacity onPress={() => {
+        navigation.navigate('Tour', {
+          name: 'Main Campus Tour', 
+          order: 0,
+          type: "main"
+          })
+        }} style={styles.buttonContainer}>
+    
         <Text style={styles.optionButtons}> Main Campus </Text>
       </TouchableOpacity >
 
-      <TouchableOpacity onPress={() => navigation.navigate('Tour', {name: 'Residence Hall Tour'})} style={styles.buttonContainer}> 
+      <TouchableOpacity onPress={() => {
+        navigation.navigate('Tour', {
+          name: 'Residence Hall Tour', 
+          order: 0,
+          type: "residence"
+          })
+        }} style={styles.buttonContainer}>
+    
         <Text style = {styles.optionButtons}> Residence </Text>
       </TouchableOpacity >
 
-      <TouchableOpacity onPress={() => navigation.navigate('Tour', {name: 'Fraternity Tour'})} style={styles.buttonContainer}> 
+      <TouchableOpacity onPress={() => {
+        navigation.navigate('Tour', {
+          name: 'Fraternity Tour', 
+          order: 0,
+          type: "fraternity"
+          })
+        }} style={styles.buttonContainer}>
+    
         <Text style = {styles.optionButtons}> Fraternity </Text>
       </TouchableOpacity >
-      <TouchableOpacity onPress={() => navigation.navigate('Tour', {name: 'Sorority Tour'})} style={styles.buttonContainer}> 
+
+      <TouchableOpacity onPress={() => {
+        navigation.navigate('Tour', {
+          name: 'Sorority Tour', 
+          order: 0,
+          type: "sorority"
+          })
+        }} style={styles.buttonContainer}>
+    
         <Text style = {styles.optionButtons}> Sorority </Text>
       </TouchableOpacity >
 

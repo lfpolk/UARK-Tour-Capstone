@@ -14,27 +14,43 @@ const Tour = ({
     navigation, route
 }) => {
 
-  // Objects will be in route.params.object
+  const { name, order, type } = route.params
+  console.log(name)
+  console.log('order: ' + order)
+  console.log(locations[order].inputCoord[0])
+
+  try {
+    const response = axios.get('http://localhost:8080/', {
+        method: 'GET',
+        body: JSON.stringify({
+            inputTour: type
+        }),
+    })
+        .then(response => response.json())
+        console.log(response)
+
+        //write to json file
+
+} catch (error) {
+    console.warn(error);
+}
+
+
+  const [currentOrder, setCurrentOrder] = useState(order)
+  
+  console.log('currentOrder: ' + currentOrder)
+  const [hasUpdated, setHasUpdated] = useState(false)
 
   const { colors } = useTheme();
   const [destination, setDestination] = useState(
-    {
-
-    })
-
     
-    
+      {...destination,
+        distance: 100,
+        reached: false
+      }
+    )
 
-  const [newDestination, setNewDestination] = useState(
-    {
-      _id: '1',
-      inputCoord: [36.06666610956379, -94.17378783417878],
-      inputBuilding:'J.B. HUNT',
-      inputImg: 'https://www.cdicon.com/assets/uploads/modules/90443-for-web-82055.jpg', 
-      inputDescription: 'Departments in this building include Computer Science and Engineering, Walton College of Business, Center For Advanced Spatial Technologies, and High Performance Computing Center.',
-      inputLink: 'https://directory.uark.edu/buildings/73/jbht/j-b-hunt-transport-services-inc-center-for-academic-excellence'
-    }
-  )
+  const newDestination = locations[order]
 
     const [myPosition, setMyPosition] = useState(null);
 
@@ -46,6 +62,7 @@ const Tour = ({
       });
     
     const onUserLocationChange = async (event) => {
+
       setMyPosition(event.nativeEvent.coordinate);
       const { latitude, longitude, heading } = event.nativeEvent.coordinate
       try {
@@ -58,7 +75,10 @@ const Tour = ({
         console.error(e);
       }
     }
+    
     const onDirectionFound = (event) => {
+
+
 
       if (destination){
         setDestination(
@@ -68,6 +88,8 @@ const Tour = ({
           }
         )
       }
+      setCurrentOrder(order)
+      setHasUpdated(true)
     }
 
     const getDestination = () => {
@@ -75,16 +97,25 @@ const Tour = ({
           //my house (Osmin)
           //latitude: 36.321410732129166, 
           //longitude: -94.15284966387985
-
           //union
-          latitude : locations.markers[1].location[0], 
-          longitude: locations.markers[1].location[1]
+          latitude : locations[order].inputCoord[0], 
+          longitude: locations[order].inputCoord[1]
         }
     }
     
 
+    useEffect(() => {
+
+    }, []);
+
+    var temp = 0;
+
     return (
+      
     <View style={styles.container}>
+        <View>
+
+        </View>
         <MapView 
         initialRegion={region}
         provider={MapView.PROVIDER_GOOGLE} 
@@ -98,6 +129,8 @@ const Tour = ({
         //zoomEnabled={true}
         //rotateEnabled={true}
         >
+
+          
           {destination && (
                   <MapViewDirections
                   
@@ -117,7 +150,7 @@ const Tour = ({
                   />
                   )}
     
-        </MapView>
+          </MapView> 
         <View style={styles.bottomContainer}>
           <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.buttonContainer}> 
           {/* <Ionicons name="exit-outline" size={20} color="red" style={styles.exitButton}/> */}
@@ -130,11 +163,17 @@ const Tour = ({
 
         </View>
         
-         {destination.reached &&
-        <Destination 
+         {destination.reached && (order == currentOrder) &&
+         <View>
+           {navigation.navigate('Destination', {name: name, order: order, destination: newDestination})}
+        {/*
+        <Destination
+          order = {order}
+          name = {name}
           newDestination ={newDestination}
-          distance ={destination.distance}
-        />}
+          //distance ={destination.distance}
+        /> */}
+        </View>}
     </View>
     );
     };

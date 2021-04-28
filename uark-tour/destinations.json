@@ -1,19 +1,41 @@
-{
-    "markers": [
-      {
-        "name": "Union",
-        "location": [36.068689, -94.175169],
-        "order": 0
-      },
-      {
-        "name": "J.B. Hunt",
-        "location": [36.06666610956379, -94.17378783417878],
-        "order": 1
-      },
-      {
-        "name": "Old Main",
-        "location": [36.068691284851326, -94.17145521725391],
-        "order": 2
-      }
-    ]
+[
+  {
+      "inputCoord": [
+          36.068690788807665,
+          -94.1751556051231
+      ],
+      "_id": "60887cc900f9100004d0aea6",
+      "inputBuilding": "Arkansas Union",
+      "inputImg": "https://upload.wikimedia.org/wikipedia/commons/0/0e/UofAUnion.jpg",
+      "inputDescription": "The Arkansas Union is the heart of campus. It provides a community for students to gather with convenient services such as dining, entertainment, meeting/event spaces, student involvement and more. ",
+      "inputLink": "https://directory.uark.edu/buildings/9/arku/arkansas-union",
+      "inputTour": "main",
+      "__v": 0
+  },
+  {
+      "inputCoord": [
+          36.069374111955156,
+          -94.17073789197052
+      ],
+      "_id": "6088aa38b4e8d400042d522d",
+      "inputBuilding": "Peabody Hall",
+      "inputImg": "https://live.staticflickr.com/4660/39593726384_714216e290_b.jpg",
+      "inputDescription": "Peabody hall was built it 1913 and contributes to the University of Arkansas Historic District. It is part of the University of Arkansas College of Education and Health.",
+      "inputLink": "https://directory.uark.edu/buildings/99/peah/peabody-hall",
+      "inputTour": "main",
+      "__v": 0
+  },
+  {
+      "inputCoord": [
+          36.06869043354912,
+          -94.17145909560593
+      ],
+      "_id": "6088aaf4b4e8d400042d5230",
+      "inputBuilding": "Old Main",
+      "inputImg": "https://www.arkansasalumni.org/s/1429/images/editor/uatraditions_images/oldmain_web.jpg",
+      "inputDescription": "Old Main was the first permanent building to be erected on campus. Its exterior was finished in 1875, just three years after the university opened for classes. Originally known as the University building, the name was changed to Old Main in 1991.",
+      "inputLink": "https://directory.uark.edu/buildings/80/main/old-main",
+      "inputTour": "main",
+      "__v": 0
   }
+]

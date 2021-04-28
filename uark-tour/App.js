@@ -43,7 +43,7 @@ const App = () => {
           <Main.Screen 
             name="Destination"
             component={Destination}
-            options={({ route }) => ({ title: route.params.destination, headerLeft: ()=> null})}
+            options={({ route }) => ({ title: route.params.destination.inputBuilding, headerLeft: ()=> null})}
           />
 
         </Main.Navigator>
