@@ -5,8 +5,12 @@ import { StyleSheet, Text, View, Dimensions, TouchableOpacity } from 'react-nati
 
 
 const FreeRoam = ({
-    navigation
+    navigation, route
 }) => {
+
+    const { locations } = route.params
+
+    console.log(locations)
 
   console.log("made it here")
 

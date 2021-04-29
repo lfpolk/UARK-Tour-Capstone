@@ -22,7 +22,24 @@ return (
               <Text style={styles.buttons}>{`Return to tour`}</Text>
             </TouchableOpacity >
       )}
-<TouchableOpacity onPress={() => navigation.navigate('FreeRoam')} style={styles.returnButton}> 
+    <TouchableOpacity onPress={() => {
+                axios.get('https://uark-tour-db-server.herokuapp.com/all', {
+                })
+                .then(function (response) {
+                  console.log(response.data[0].inputBuilding)
+                  locations = response.data;
+                  navigation.navigate('FreeRoam', {
+                    locations: locations, 
+                    })
+                })
+                .catch(function (error) {
+                  console.log(error);
+                })
+                .then(function () {
+                  
+                }); 
+
+        }} style={styles.returnButton}> 
               <Text style={styles.buttons}>{`Free Roam`}</Text>
             </TouchableOpacity >
       <Image source={require("../assets/uarkLogo.png")} style = {styles.uarkLogo}/>
