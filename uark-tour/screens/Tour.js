@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext } from 'react';
 import MapView, {Polyline, Marker, Image} from 'react-native-maps';
-import { StyleSheet, Text, View, Dimensions, TouchableOpacity } from 'react-native'; 
+import { StyleSheet, Text, View, Dimensions, TouchableOpacity, LogBox } from 'react-native'; 
 //import locations from '../destinations.json';
 import * as Permissions from 'expo-permissions';
 import { Ionicons } from '@expo/vector-icons'; 
@@ -24,12 +24,12 @@ const Tour = ({
   const locations = context[0];
   const order = context[1]
 
-  console.log(locations[order].inputCoord[0])
+  //console.log(locations[order].inputCoord[0])
   //console.log(type)
 
   const [currentOrder, setCurrentOrder] = useState(order)
   
-  console.log('currentOrder: ' + currentOrder)
+  //console.log('currentOrder: ' + currentOrder)
   const [hasUpdated, setHasUpdated] = useState(false)
 
   const { colors } = useTheme();
@@ -85,7 +85,7 @@ const Tour = ({
 
     const getDestination = () => {
       console.log("getDest")
-      console.log(locations[0])
+      //console.log(locations[0])
         return {
           //my house (Osmin)
           //latitude: 36.321410732129166, 

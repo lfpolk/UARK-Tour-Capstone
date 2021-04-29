@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react';
 import MapView, {Polyline, Marker} from 'react-native-maps';
-import { StyleSheet, Text, View, Dimensions, Image, TouchableOpacity, Button } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, Image, TouchableOpacity, Button, LogBox  } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
 import { useTheme } from '@react-navigation/native';
 //import Geolocation from '@react-native-community/geolocation';
@@ -8,6 +8,8 @@ import * as Permissions from 'expo-permissions';
 import * as Location from 'expo-location';
 import { LocationGeofencingEventType } from 'expo-location';
 import { Context } from "../App";
+
+
 
 
 
@@ -19,7 +21,7 @@ const Destination = ({
 
   const { name,destination } = route.params
   const dest =  destination
-  console.log(name)
+  console.log("YOOOOOOOOOOOO" + destination.length)
   console.log(dest)
   console.log(order)
 
@@ -73,6 +75,19 @@ const Destination = ({
       </TouchableOpacity >
       </View>
           }
+
+      {(name== "freeroam" ) && (!order) &&
+      <View style={styles.buttonContainer}>
+      <TouchableOpacity onPress={() => {
+        setContext([locations, context[1]+1])
+        navigation.navigate('FreeRoam', {
+  
+          })
+        }}>
+      <Text multiline={true} style={[styles.nextButton, {backgroundColor: colors.background}]}>{`Free Roam`}</Text>
+      </TouchableOpacity >
+      </View>
+      }
 
   {(locations.length - 1 == order ) && 
       <View style={styles.buttonContainer}>
