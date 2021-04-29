@@ -1,13 +1,13 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import MapView, {Polyline, Marker} from 'react-native-maps';
 import { StyleSheet, Text, View, Dimensions, Image, TouchableOpacity, Button } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
 import { useTheme } from '@react-navigation/native';
-import locations from '../destinations.json';
 //import Geolocation from '@react-native-community/geolocation';
 import * as Permissions from 'expo-permissions';
 import * as Location from 'expo-location';
 import { LocationGeofencingEventType } from 'expo-location';
+import { Context } from "../App";
 
 
 
@@ -17,12 +17,15 @@ const Destination = ({
 
   console.log("made it here")
 
-  const { name, order, destination } = route.params
+  const { name,destination } = route.params
   const dest =  destination
   console.log(name)
   console.log(dest)
   console.log(order)
 
+  const [context, setContext] = useContext(Context);
+  const locations = context[0];
+  const order = context[1]
 
   const { colors } = useTheme();
 
@@ -58,16 +61,32 @@ const Destination = ({
           style={styles.mapStyle} 
           scrollEnabled={false}
           ></MapView>
+          {(locations.length - 1 > order ) && 
       <View style={styles.buttonContainer}>
       <TouchableOpacity onPress={() => {
+        setContext([locations, context[1]+1])
         navigation.navigate('Tour', {
           name: name, 
-          order: order + 1
           })
         }}>
       <Text multiline={true} style={[styles.nextButton, {backgroundColor: colors.background}]}>{`Next \nStop`}</Text>
       </TouchableOpacity >
       </View>
+          }
+
+  {(locations.length - 1 == order ) && 
+      <View style={styles.buttonContainer}>
+      <TouchableOpacity onPress={() => {
+        setContext([locations, context[1]+1])
+        navigation.navigate('Home', {
+  
+          })
+        }}>
+      <Text multiline={true} style={[styles.nextButton, {backgroundColor: colors.background}]}>{`End Tour`}</Text>
+      </TouchableOpacity >
+      </View>
+          }
+
         <View style={styles.buildingContainer}>
           <View style={[styles.buildingPage, {backgroundColor: colors.background}]}>
             <View style={styles.buildingTitle}>
