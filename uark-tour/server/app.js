@@ -4,13 +4,13 @@ const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 require('./Destination')
 var cors = require('cors')
-const axios = require('axios')
+require('dotenv').config()
 
 app.use(cors())
 
 const Destination = mongoose.model('destination')
 
-const mongourl = MONGODB_URL;
+const mongourl = process.env.MONGODB_URL;
 
 mongoose.connect(mongourl, {
     useNewUrlParser: true,
@@ -18,7 +18,6 @@ mongoose.connect(mongourl, {
 })
 
 mongoose.connection.on("connected", () => {
-    console.log("connected to mongo")
 })
 mongoose.connection.on("error", (err) => {
     console.log("error", err)
@@ -28,8 +27,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
 app.get('/',(req,res)=>{
-    Destination.find({}).then(data=>{
-        console.log(data)
+    Destination.find({ inputTour: req.query.inputTour }).then(data=>{
         res.send(data)
         
     }).catch(err=>{
@@ -39,14 +37,15 @@ app.get('/',(req,res)=>{
 })
 
 app.post('/send-data',(req,res)=>{
-    const employee = new Destination({
+    const destination = new Destination({
         inputCoord: req.body.inputCoord,
         inputBuilding: req.body.inputBuilding,
         inputImg: req.body.inputImg, 
         inputDescription: req.body.inputDescription,
-        inputLink: req.body.inputLink
+        inputLink: req.body.inputLink,
+        inputTour: req.body.inputTour
     })
-    employee.save()
+    destination.save()
     .then(data=>{
         console.log(data)
         res.send(data)
@@ -56,4 +55,16 @@ app.post('/send-data',(req,res)=>{
     
 })
 
+app.delete("/delete", (req, res) => {
+    Destination.deleteOne({ _id: req.body._id }).then(function(){
+        console.log("Data deleted"); // Success
+        res.send("Data Deleted");
+    }).catch(function(err){
+        console.log(err); // Failure
+    });
+});
+
+app.listen(process.env.PORT || 8080, function(){
+    console.log("The Server Has Started!");
+});
 

@@ -5,7 +5,8 @@ const DestinationSchema = new moongoose.Schema({
     inputBuilding:String,
     inputImg: String, 
     inputDescription: String,
-    inputLink: String
+    inputLink: String,
+    inputTour: String
 })
 
 moongoose.model("destination", DestinationSchema)
