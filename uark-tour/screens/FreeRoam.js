@@ -1,20 +1,21 @@
-import React, {useState, useEffect, useContext} from 'react';
-import MapView, {Polyline, Marker, Callout} from 'react-native-maps';
-import { StyleSheet, Text, View, Dimensions, TouchableOpacity, Image, Pressable, LogBox} from 'react-native'; 
+import React, {useState} from 'react';
+import MapView, {Marker, Callout} from 'react-native-maps';
+import { StyleSheet, Text, View, Dimensions, LogBox} from 'react-native'; 
 import { WebView } from 'react-native-webview';
 import MapViewDirections from 'react-native-maps-directions';
-import { call } from 'react-native-reanimated';
+LogBox.ignoreAllLogs()
+console.log = console.warn = console.error = () => {};
 
+//Free Roam page 
 
 const FreeRoam = ({
     navigation, route
 }) => {
 
+  //setting locations = to the location passed in
     const { locations } = route.params
 
-    //console.log(locations)
-
-  console.log("made it here")
+  // creating a position state for map to show location
   const [myPosition, setMyPosition] = useState(null);
 
   const [region, setRegion] = useState({
@@ -24,25 +25,20 @@ const FreeRoam = ({
     longitudeDelta: 0.00161
   });
 
+  //setting region for map to load over
   const [destination, setDestination] = useState(null)
+
+  //creating temp destination variable to be able to clear the actual destination later, and pass it into the destination page
   var tempDest = destination;
 
+    //set position when it dectes movement of user location 
     const onUserLocationChange = async (event) => {
 
       setMyPosition(event.nativeEvent.coordinate);
-      console.log(myPosition)
-      const { latitude, longitude, heading } = event.nativeEvent.coordinate
-      try {
-        const input = {
-          latitude,
-          longitude,
-          heading,
-        }
-      } catch (e) {
-        console.error(e);
-      }
+
     }
 
+    //when directions are found set the distance from location and destination, also check if the destination is reached 
     const onDirectionFound = (event) => {
       if (destination){
         setDestination(
@@ -53,20 +49,17 @@ const FreeRoam = ({
         )
       }
     }
+
+    // get the destination coordinats for direction to show on map
     const getDestination = () => {
-      console.log("getDest")
-      console.log(destination)
-      //console.log(locations[0])
         return {
-          //my house (Osmin)
-          //latitude: 36.321410732129166, 
-          //longitude: -94.15284966387985
-          //union
+
           latitude : destination.inputCoord[0], 
           longitude: destination.inputCoord[1]
         }
     }
 
+    //if there is a destination load the direction to it on the map 
     if(destination)
     {
       return(
@@ -74,15 +67,12 @@ const FreeRoam = ({
         <MapView
         initialRegion={region}
         provider={MapView.PROVIDER_GOOGLE} 
-        style={{width:'100%', height: '90%'}}
+        style={{width:'100%', height: '100%'}}
         followsUserLocation={true}
         showsUserLocation={true}
         showsMyLocationButton={true}
         onUserLocationChange={onUserLocationChange}
-        //showsCompass={true}
-        //toolbarEnabled={true}
-        //zoomEnabled={true}
-        //rotateEnabled={true}
+
         >
 
           
@@ -90,18 +80,13 @@ const FreeRoam = ({
                   <MapViewDirections
                   
                     origin={myPosition}
-                    //destination={{ 
-                        //latitude: 36.620910945465315, 
-                        //longitude: -94.65278047498794
-                        //latitude : locations.markers[1].location[0], 
-                        //longitude: locations.markers[1].location[1],
-                   // }}
+
                     onReady={onDirectionFound}
                     destination={getDestination()}
                     mode="WALKING"
                     strokeWidth={5}
                     strokeColor="red"
-                    apikey='AIzaSyCn2J57im0jcfVvIxlWsYNaV5jl1wBHvxQ'
+                    apikey='AIzaSyBfRXJU9RpSG_lP74W9OZS9-bm7tG1pUfk'
                   />)
           
                   }
@@ -112,25 +97,20 @@ const FreeRoam = ({
           <View>
             {setDestination(null)}
             {navigation.navigate('Destination', {name: "freeroam", destination: tempDest})}
-          {/*
-          <Destination
-            order = {order}
-            name = {name}
-            newDestination ={newDestination}
-            //distance ={destination.distance}
-          /> */}
+
           </View>
           )}
           </View>
       )
     }
 
+    //if there is no destination, show the map with markers
     return (
       <View style={styles.container}>
         <MapView
           provider={MapView.PROVIDER_GOOGLE} 
           initialRegion={region}
-          style={{width:'100%', height: '90%'}}
+          style={{width:'100%', height: '100%'}}
           showsUserLocation={true}
           followsUserLocation={true}
           showsMyLocationButton={true}
@@ -165,11 +145,8 @@ const FreeRoam = ({
   
   const styles = StyleSheet.create({
       container: {
-        //display: 'flex',
         flex: 1,
-        //backgroundColor: '#fff',
         alignItems: 'center',
-        //justifyContent: 'center',
       },
       bubble:{
         flexDirection: 'column',
@@ -182,7 +159,6 @@ const FreeRoam = ({
         width: 150
       },
       mapStyle: {
-        //flex: 1,
         flex: 1,
         position: 'absolute',
         width: Dimensions.get('window').width,

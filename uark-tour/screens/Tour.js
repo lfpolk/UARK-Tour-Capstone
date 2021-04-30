@@ -1,38 +1,38 @@
-import React, {useState, useEffect, useContext } from 'react';
-import MapView, {Polyline, Marker, Image} from 'react-native-maps';
+import React, {useState, useContext } from 'react';
+import MapView from 'react-native-maps';
 import { StyleSheet, Text, View, Dimensions, TouchableOpacity, LogBox } from 'react-native'; 
-//import locations from '../destinations.json';
-import * as Permissions from 'expo-permissions';
-import { Ionicons } from '@expo/vector-icons'; 
-import * as Location from 'expo-location';
 import MapViewDirections from 'react-native-maps-directions';
 import { useTheme } from '@react-navigation/native';
-import Destination from './Destination';
 import { PauseContext, Context } from "../App";
+LogBox.ignoreAllLogs()
+console.log = console.warn = console.error = () => {};
 
+// main page for all the tours
 
 const Tour = ({
     navigation, route
 }) => {
 
-  //const locations =
+  // set the variable name = to what tour you are in 
   const { name } = route.params
 
+  // set variables to pause tour
   const [pauseContext, setPauseContext] = useContext(PauseContext);
   const [context, setContext] = useContext(Context);
 
+  //set locations array and the order array
   const locations = context[0];
   const order = context[1]
 
-  //console.log(locations[order].inputCoord[0])
-  //console.log(type)
-
+  //set the currentOrder = index for the tour 
   const [currentOrder, setCurrentOrder] = useState(order)
   
-  //console.log('currentOrder: ' + currentOrder)
+  //check if the app has updated 
   const [hasUpdated, setHasUpdated] = useState(false)
 
   const { colors } = useTheme();
+
+  // initalize destination object
   const [destination, setDestination] = useState(
     
       {...destination,
@@ -40,37 +40,29 @@ const Tour = ({
         reached: false
       }
     )
-
+  
+  // set the newdestinatio = to the  location object with the correct index
   const newDestination = locations[order]
 
+    //create variable for my position for location to show on map  
     const [myPosition, setMyPosition] = useState(null);
 
+    // set region for map to show the correct area
     const [region, setRegion] = useState({
         latitude: 36.068689,
         longitude: -94.175169,
         latitudeDelta: 0.00322,
         longitudeDelta: 0.00121
       });
-    
+
+    // check if the location changes if so change myposition on map
     const onUserLocationChange = async (event) => {
 
-      setMyPosition(event.nativeEvent.coordinate);
-      const { latitude, longitude, heading } = event.nativeEvent.coordinate
-      try {
-        const input = {
-          latitude,
-          longitude,
-          heading,
-        }
-      } catch (e) {
-        console.error(e);
-      }
+      setMyPosition(event.nativeEvent.coordinate);    
     }
     
+    // when directions are found check the distance from location to destination
     const onDirectionFound = (event) => {
-
-
-
       if (destination){
         setDestination(
           {...destination,
@@ -83,26 +75,16 @@ const Tour = ({
       setHasUpdated(true)
     }
 
+    // get the coordinations for the current location
     const getDestination = () => {
-      console.log("getDest")
-      //console.log(locations[0])
         return {
-          //my house (Osmin)
-          //latitude: 36.321410732129166, 
-          //longitude: -94.15284966387985
-          //union
+
           latitude : locations[order].inputCoord[0], 
           longitude: locations[order].inputCoord[1]
         }
     }
     
-
-    useEffect(() => {
-
-    }, []);
-
-    var temp = 0;
-
+    // display map with tour information 
     return (
       
     <View style={styles.container}>
@@ -113,13 +95,13 @@ const Tour = ({
         <TouchableOpacity onPress={() => {
           setPauseContext(false)
           navigation.navigate('Home')}} style={styles.exitButton}> 
-          {/* <Ionicons name="exit-outline" size={20} color="red" style={styles.exitButton}/> */}
+
           <Text style={styles.buttons}>{`Exit Tour`}</Text>
         </TouchableOpacity >
           <TouchableOpacity onPress={() => {
             setPauseContext([true, name])
             navigation.navigate('Home')}} style={styles.pauseButton}> 
-          {/* <Ionicons name="exit-outline" size={20} color="red" style={styles.exitButton}/> */}
+
           <Text style={styles.buttons}>{`Pause Tour`}</Text>
         </TouchableOpacity >
         </View>
@@ -142,10 +124,6 @@ const Tour = ({
         showsUserLocation={true}
         showsMyLocationButton={true}
         onUserLocationChange={onUserLocationChange}
-        //showsCompass={true}
-        //toolbarEnabled={true}
-        //zoomEnabled={true}
-        //rotateEnabled={true}
         >
 
           
@@ -153,34 +131,21 @@ const Tour = ({
                   <MapViewDirections
                   
                     origin={myPosition}
-                    //destination={{ 
-                        //latitude: 36.620910945465315, 
-                        //longitude: -94.65278047498794
-                        //latitude : locations.markers[1].location[0], 
-                        //longitude: locations.markers[1].location[1],
-                   // }}
                     onReady={onDirectionFound}
                     destination={getDestination()}
                     mode="WALKING"
                     strokeWidth={5}
                     strokeColor="red"
-                    apikey='AIzaSyAy_CEDrADJm9t4zdf2Dl8othOfzxMsKAc'
+                    apikey='AIzaSyBfRXJU9RpSG_lP74W9OZS9-bm7tG1pUfk'
                   />)
           
                   }
     
           </MapView> 
         
-         {destination.reached && (order == currentOrder) &&
-         <View>
-           {navigation.navigate('Destination', {name: name, destination: newDestination})}
-        {/*
-        <Destination
-          order = {order}
-          name = {name}
-          newDestination ={newDestination}
-          //distance ={destination.distance}
-        /> */}
+        {destination.reached && (order == currentOrder) &&
+        <View>
+          {navigation.navigate('Destination', {name: name, destination: newDestination})}
         </View>}
 
     </View>
@@ -189,18 +154,15 @@ const Tour = ({
 
 const styles = StyleSheet.create({
   container: {
-    //display: 'flex',
     flex: 1,
-    //backgroundColor: '#fff',
     alignItems: 'center',
-    //justifyContent: 'center',
   },
   
   mapStyle: {
     flex: 1,
     position: 'absolute',
     width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height - 80,
+    height: Dimensions.get('window').height,
     zIndex: -10
   },
 
@@ -211,11 +173,8 @@ const styles = StyleSheet.create({
   buttonContainer: {
     alignSelf: 'stretch',
     flex: 1,
-    //backgroundColor: "blue",
-    //alignSelf: 'flex-end',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    //backgroundColor: 'red',
     marginTop: 10
   },
 
@@ -240,35 +199,18 @@ const styles = StyleSheet.create({
   
   buildingContainer: {
     marginTop: 20,
-    //backgroundColor: 'blue',
     flex: 2,
-    //flexDirection: 'column',
-    //overflow: "hidden",
-    //alignItems: 'center'
   },
 
   buildingPage: {
     backgroundColor: '#BE2A2A',
     alignItems: 'center',
-    //backgroundColor: 'white',
-    //marginTop: 190,
     borderRadius: 50,
-    //alignSelf: 'center',
     width: Dimensions.get('window').width - 100,
-    //borderRadius: 10,
     borderWidth: 2,
     borderColor: '#BE2A2A',
     padding: 20
-    //flexWrap: 'wrap'
 },
-
-  buildingTitle: {
-      //flex: 1,
-      //position: 'absolute',
-      //marginTop: 25,
-      //backgroundColor:'yellow',
-
-  }
 }
 );
 

@@ -1,29 +1,23 @@
-import React, {useState, useEffect, useContext} from 'react';
-import MapView, {Polyline, Marker} from 'react-native-maps';
+import React, {useState, useContext} from 'react';
+import MapView from 'react-native-maps';
 import { StyleSheet, Text, View, Dimensions, Image, TouchableOpacity, Button, LogBox  } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
 import { useTheme } from '@react-navigation/native';
-//import Geolocation from '@react-native-community/geolocation';
-import * as Permissions from 'expo-permissions';
-import * as Location from 'expo-location';
-import { LocationGeofencingEventType } from 'expo-location';
 import { Context } from "../App";
+LogBox.ignoreAllLogs()
+console.log = console.warn = console.error = () => {};
 
 
 
-
+//destination page that will show when location is reached. 
 
 const Destination = ({
     navigation, route
 }) => {
 
-  console.log("made it here")
-
+//setting destination = to the location passed in 
   const { name,destination } = route.params
   const dest =  destination
-  console.log("YOOOOOOOOOOOO" + destination.length)
-  console.log(dest)
-  console.log(order)
 
   const [context, setContext] = useContext(Context);
   const locations = context[0];
@@ -31,12 +25,7 @@ const Destination = ({
 
   const { colors } = useTheme();
 
-  /* var inputCoord = [36.06666610956379, -94.17378783417878];
-  var inputBuilding = 'J.B. HUNT'; // TRANSPORT SERVICES INC. CENTER FOR ACADEMIC EXCELLENCE (JBHT)
-  var inputImg = 'https://www.cdicon.com/assets/uploads/modules/90443-for-web-82055.jpg'
-  var inputDescription = 'Departments in this building include Computer Science and Engineering, Walton College of Business, Center For Advanced Spatial Technologies, and High Performance Computing Center.'
-  var inputLink = 'https://directory.uark.edu/buildings/73/jbht/j-b-hunt-transport-services-inc-center-for-academic-excellence' */
-
+  //setting region for map to load over
     const [region, setRegion] = useState({
         latitude: dest.inputCoord[0] - 0.001,
         longitude: dest.inputCoord[1],
@@ -44,17 +33,12 @@ const Destination = ({
         longitudeDelta: 0.00161
       });
 
+      //creating button for learn more link
       const _handlePressButtonAsync = async () => {
         let result = await WebBrowser.openBrowserAsync(dest.inputLink);
       };
 
-    useEffect(() => {
-      
-    }, []);
-
-  
-
-
+    //returning content of page
     return (
       <View style={styles.container}>
   <MapView
@@ -126,25 +110,20 @@ const Destination = ({
   
   const styles = StyleSheet.create({
       container: {
-        //display: 'flex',
         flex: 1,
-        //backgroundColor: '#fff',
         alignItems: 'center',
-        //justifyContent: 'center',
       },
       
       mapStyle: {
-        //flex: 1,
         position: 'absolute',
         width: Dimensions.get('window').width,
-        height: Dimensions.get('window').height - 30,
+        height: Dimensions.get('window').height,
         zIndex: -10
       },
   
       buttonContainer: {
         flex: 5,
         alignSelf: 'flex-end',
-        //backgroundColor: 'red'
       },
   
       nextButton: {
@@ -158,51 +137,34 @@ const Destination = ({
         textAlign: 'center',
         borderColor: '#BE2A2A',
         marginRight: 10,
-        marginTop: 10,
+        marginTop: 20,
       },
   
       buildingContainer: {
-        //backgroundColor: 'blue',
         flex: 8,
-        //flexDirection: 'column',
-        //overflow: "hidden",
         alignItems: 'center',
         justifyContent: 'flex-end'
       },
   
       buildingPage: {
-        //position: 'relative',
-        //flex: 1,
-        //justifyContent: 'flex-end',
-        //justifyContent: 'center',
-        //marginTop: 10,
         alignItems: 'center',
-        //backgroundColor: 'white',
-        //marginTop: 190,
         borderRadius: 50,
-        //alignSelf: 'center',
         width: Dimensions.get('window').width - 30,
-        //borderRadius: 10,
         borderWidth: 2,
         borderColor: '#BE2A2A',
         borderBottomWidth: 0,
         borderBottomEndRadius: 0,
         borderBottomStartRadius: 0,
         padding: 4
-        //flexWrap: 'wrap'
     },
   
       buildingTitle: {
-          //flex: 1,
-          //position: 'absolute',
           marginTop: 25,
-          //backgroundColor:'yellow',
           width: '80%'
       },
   
       buildingTitleText: {
           textAlign: 'justify',
-          //color: '#000',
           textShadowColor: 'rgba(0, 0, 0, 0.25)',
           textShadowOffset: {width: -1, height: 1},
           textShadowRadius: 4,
@@ -211,7 +173,6 @@ const Destination = ({
       },
   
       buildingImage: {
-        //flex: 1,
         marginTop: 15,
         width: '85%',
         height: '30%'

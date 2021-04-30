@@ -1,19 +1,21 @@
-import { StatusBar } from 'expo-status-bar';
 import React, {useContext} from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, LogBox } from 'react-native';
 import axios from 'axios';
 import { PauseContext, Context } from "../App";
+LogBox.ignoreAllLogs()
+console.log = console.warn = console.error = () => {};
+// home page 
 
 var locations = []
-//console.log(colorScheme);
-//export default function App() {
 const Home = ({
     navigation
 }) => {
 
+  //create the pause variables for the tour
   const [context, setContext] = useContext(Context);
   const [pauseContext, setPauseContext] = useContext(PauseContext);
 
+// show the main screen with options to all tours and free roam. In all tours pass in the data collected from the mongoDB api
 return (
     <View style={styles.container}>
 
@@ -26,7 +28,6 @@ return (
                 axios.get('https://uark-tour-db-server.herokuapp.com/all', {
                 })
                 .then(function (response) {
-                  console.log(response.data[0].inputBuilding)
                   locations = response.data;
                   navigation.navigate('FreeRoam', {
                     locations: locations, 
@@ -53,7 +54,6 @@ return (
                   }
                 })
                 .then(function (response) {
-                  console.log(response.data[0].inputBuilding)
                   locations = response.data;
                   setContext([locations, 0]);
                   navigation.navigate('Tour', {
@@ -79,7 +79,6 @@ return (
           }
         })
         .then(function (response) {
-          console.log(response.data[0].inputBuilding)
           locations = response.data;
           setContext([locations, 0]);
           navigation.navigate('Tour', {
@@ -105,7 +104,6 @@ return (
           }
         })
         .then(function (response) {
-          console.log(response.data[0].inputBuilding)
           locations = response.data;
           setContext([locations, 0]);
           navigation.navigate('Tour', {
@@ -132,7 +130,6 @@ return (
           }
         })
         .then(function (response) {
-          console.log(response.data[0].inputBuilding)
           locations = response.data;
           setContext([locations, 0]);
           navigation.navigate('Tour', {
@@ -153,12 +150,6 @@ return (
     </View>
 )
 
-/*
-const onPressMain = () => console.log("Main Campus")
-const onPressResidence = () => console.log("Residence")
-const onPressFraternity = () => console.log("Fraternity")
-const onPressSorority = () => console.log("Sorority")
-*/
       }
 const styles = StyleSheet.create({
   container: {
@@ -174,11 +165,8 @@ const styles = StyleSheet.create({
   returnContainer: {
     alignSelf: 'stretch',
     flex: 1,
-    //backgroundColor: "blue",
-    //alignSelf: 'flex-end',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    //backgroundColor: 'red',
     marginBottom: 10
   },
 
@@ -200,11 +188,12 @@ const styles = StyleSheet.create({
   uarkLogo: {
     marginBottom: 40,
     width: 200,
-    height: 200,
+    height: 95,
     resizeMode: 'contain'
   },
 
   selectTour: {
+    marginTop: -30,
     paddingVertical: 20,
     width: '55%',
     textAlign: 'center',
