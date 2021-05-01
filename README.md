@@ -7,7 +7,7 @@
     <ol style="width: 50%; margin: 0 auto">
         <li>
             <h4>Download project to local machine</h4>
-            <p>Download project and unzip it or clone the repository by runing git clone https://github.com/lfpolk/UARK-Tour-Capstone.git in your terminal</p>
+            <p>Download project and unzip it</p>
         </li>
         <li>
             <h4>Download Nodejs</h4>
@@ -23,6 +23,12 @@
             <p>Navigate to the uark-tour folder on your terminal and run npm i</p>
         </li>
         <li>
+            <h4>Create a .env file with API KEY</h4>
+            <p>While in the uark-tour folder create a file called .env, then open this file and put in the next line <br>
+                GOOGLE_API=(API KEY) <br> where the value of the API KEY will be email to you, or you can use your own google maps
+                api key with directions enabled</p>
+            </li>
+            <li>
             <h4>Start project</h4>
             <p>While in the uark-tour folder on your terminal run npm start</p>
         </li>
