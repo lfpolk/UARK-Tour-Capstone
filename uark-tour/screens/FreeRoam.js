@@ -3,6 +3,9 @@ import MapView, {Marker, Callout} from 'react-native-maps';
 import { StyleSheet, Text, View, Dimensions, LogBox} from 'react-native'; 
 import { WebView } from 'react-native-webview';
 import MapViewDirections from 'react-native-maps-directions';
+import config from "../config"
+
+
 LogBox.ignoreAllLogs()
 console.log = console.warn = console.error = () => {};
 
@@ -86,7 +89,7 @@ const FreeRoam = ({
                     mode="WALKING"
                     strokeWidth={5}
                     strokeColor="red"
-                    apikey='AIzaSyBfRXJU9RpSG_lP74W9OZS9-bm7tG1pUfk'
+                    apikey={config.GOOGLE_API}
                   />)
           
                   }

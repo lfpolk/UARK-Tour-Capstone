@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, Dimensions, TouchableOpacity, LogBox } from 're
 import MapViewDirections from 'react-native-maps-directions';
 import { useTheme } from '@react-navigation/native';
 import { PauseContext, Context } from "../App";
+import config from "../config"
 LogBox.ignoreAllLogs()
 console.log = console.warn = console.error = () => {};
 
@@ -136,7 +137,7 @@ const Tour = ({
                     mode="WALKING"
                     strokeWidth={5}
                     strokeColor="red"
-                    apikey='AIzaSyBfRXJU9RpSG_lP74W9OZS9-bm7tG1pUfk'
+                    apikey={config.GOOGLE_API}
                   />)
           
                   }
