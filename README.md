@@ -7,7 +7,7 @@
     <ol style="width: 50%; margin: 0 auto">
         <li>
             <h4>Download project to local machine</h4>
-            <p>Download project and unzip it</p>
+            <p>Download project and unzip it or clone the repository by runing git clone https://github.com/lfpolk/UARK-Tour-Capstone.git in your terminal</p>
         </li>
         <li>
             <h4>Download Nodejs</h4>
